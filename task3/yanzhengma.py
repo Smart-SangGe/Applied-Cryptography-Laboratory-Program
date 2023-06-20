@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class LFSR:
     def __init__(self, seed, taps):
         self.state = np.array(list(map(int, seed)))

@@ -1,11 +1,3 @@
-'''
-Author: Smart-SangGe 2251250136@qq.com
-Date: 2023-05-24 14:38:38
-LastEditors: Smart-SangGe 2251250136@qq.com
-LastEditTime: 2023-05-24 14:43:43
-FilePath: \task5\ecc.py
-Description: ecc
-'''
 class EllipticCurve:
     def __init__(self, a, b, mod):
         self.a = a

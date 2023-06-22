@@ -57,7 +57,6 @@ def sm2_sign(message, private_key):
         s = (mod_inverse(1 + d, n) * (k - r * d)) % n
         if s != 0:
             break
-        print(iteration)
         iteration += 1
 
     if iteration == max_iterations:

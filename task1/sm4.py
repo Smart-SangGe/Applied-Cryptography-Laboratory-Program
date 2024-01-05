@@ -1,4 +1,4 @@
-from gmssl import sm4
+from gmssl import sm4 # pylint: disable=e0401
 
 # 加密函数
 def sm4_encrypt(key, plaintext):

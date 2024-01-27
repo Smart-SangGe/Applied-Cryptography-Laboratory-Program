@@ -1,2 +1,4 @@
-gmssl==3.2.2
-pycryptodome==3.19.1
+gmssl>=3.2.2
+pycryptodome>=3.19.1
+bitarray>=2.9.2
+numpy>=1.26.3

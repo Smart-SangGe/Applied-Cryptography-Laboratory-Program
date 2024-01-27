@@ -2,7 +2,9 @@ def lfsr(seed):
     lfsr_sequence = seed
     while True:
         # x^10 + x^8 + x^7 + x^5 + 1
-        output = lfsr_sequence[0] ^ lfsr_sequence[2] ^ lfsr_sequence[3] ^ lfsr_sequence[5]
+        output = (
+            lfsr_sequence[0] ^ lfsr_sequence[2] ^ lfsr_sequence[3] ^ lfsr_sequence[5]
+        )
         lfsr_sequence = lfsr_sequence[1:] + [output]
         yield output
 

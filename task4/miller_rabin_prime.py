@@ -1,5 +1,6 @@
 import random
 
+
 def is_prime(n, k=5):
     if n <= 1:
         return False
@@ -34,12 +35,14 @@ def is_prime(n, k=5):
 
     return True
 
+
 def generate_prime(bits):
     while True:
         n = random.getrandbits(bits)
         n |= (1 << bits - 1) | 1
         if is_prime(n):
             return n
+
 
 bits = 1024
 prime = generate_prime(bits)

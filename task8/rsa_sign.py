@@ -1,5 +1,6 @@
 from Crypto.Util.number import *
 
+
 # 扩展欧几里得算法
 def extended_gcd(a, b):
     if b == 0:
@@ -9,6 +10,7 @@ def extended_gcd(a, b):
     y = x1 - (a // b) * y1
     return gcd, x, y
 
+
 # 求模反元素
 def mod_inverse(a, m):
     gcd, x, _ = extended_gcd(a, m)
@@ -16,13 +18,14 @@ def mod_inverse(a, m):
         return (x % m + m) % m
     return None
 
+
 # 生成密钥对
 def generate_key_pair():
     # 选择两个大素数 p 和 q
     p = getPrime(32)
 
     q = getPrime(32)
-    
+
     # 计算 N = p * q
     N = p * q
 
@@ -39,10 +42,12 @@ def generate_key_pair():
     private_key = (N, d)
     return public_key, private_key
 
+
 # RSA签名
 def rsa_sign(message, private_key):
     N, d = private_key
     return pow(message, d, N)
+
 
 # RSA验证
 def rsa_verify(message, signature, public_key):

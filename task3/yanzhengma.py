@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class LFSR:
     def __init__(self, seed, taps):
         self.state = np.array(list(map(int, seed)))
@@ -18,7 +19,7 @@ class LFSR:
     def run(self, steps):
         output = []
         for _ in range(steps):
-            current_state = ''.join(map(str, self.state))
+            current_state = "".join(map(str, self.state))
             if current_state in self.history:
                 break
             self.history.append(current_state)
@@ -29,14 +30,20 @@ class LFSR:
 
 
 # Create an instance of LFSR
-lfsr = LFSR(seed='1001101001011101', taps=[0, 3, 12, 15])
+lfsr = LFSR(seed="1001101001011101", taps=[0, 3, 12, 15])
 
 # Run the LFSR
 code = lfsr.run(100)
 
 # Convert binary to decimal and print the code
-print(''.join([str(int(''.join(map(str, code[i:i+4])), 2))
-      for i in range(0, len(code), 4)]))
+print(
+    "".join(
+        [
+            str(int("".join(map(str, code[i : i + 4])), 2))
+            for i in range(0, len(code), 4)
+        ]
+    )
+)
 
 # Print the period
-print('Period:', lfsr.cycle)  # 51
+print("Period:", lfsr.cycle)  # 51

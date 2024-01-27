@@ -20,13 +20,14 @@ def point_addition(P, Q):
         return None
 
     if P[0] == Q[0] and P[1] == Q[1]:
-        lam = (3 * P[0] ** 2 + a) * pow(2 * P[1], p-2, p)
+        lam = (3 * P[0] ** 2 + a) * pow(2 * P[1], p - 2, p)
     else:
-        lam = (Q[1] - P[1]) * pow(Q[0] - P[0], p-2, p)
+        lam = (Q[1] - P[1]) * pow(Q[0] - P[0], p - 2, p)
 
-    x = (lam ** 2 - P[0] - Q[0]) % p
+    x = (lam**2 - P[0] - Q[0]) % p
     y = (lam * (P[0] - x) - P[1]) % p
     return (x, y)
+
 
 # 点倍乘
 def point_multiplication(k, P):
@@ -38,7 +39,6 @@ def point_multiplication(k, P):
     return Q
 
 
-
 # SM2签名
 def sm2_sign(message, private_key):
     d = private_key
@@ -48,7 +48,7 @@ def sm2_sign(message, private_key):
     iteration = 0
 
     while iteration < max_iterations:
-        k = random.randint(1, n-1)
+        k = random.randint(1, n - 1)
         x1, y1 = point_multiplication(k, (Gx, Gy))
         r = (e + x1) % n
         if r == 0 or (r + k) == n:
@@ -63,6 +63,7 @@ def sm2_sign(message, private_key):
         raise Exception("Failed to generate a valid signature.")
 
     return r, s
+
 
 # SM2验证
 def sm2_verify(message, signature, public_key):
@@ -81,6 +82,7 @@ def sm2_verify(message, signature, public_key):
     else:
         return False
 
+
 # 求模反元素
 def mod_inverse(a, m):
     if a < 0:
@@ -92,8 +94,9 @@ def mod_inverse(a, m):
         x, y, u, v = u, v, x - q * u, y - q * v
     return x % m
 
+
 # 示例用法
-private_key = random.randint(1, n-1)
+private_key = random.randint(1, n - 1)
 public_key = point_multiplication(private_key, (Gx, Gy))
 print("私钥:", private_key)
 print("公钥:", public_key)
@@ -102,6 +105,7 @@ print("公钥:", public_key)
 message = 122233455453423423423
 
 # 签名
+# Exception: Failed to generate a valid signature.
 signature = sm2_sign(message, private_key)
 print("签名:", signature)
 

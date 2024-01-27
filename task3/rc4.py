@@ -26,7 +26,7 @@ def rc4_decrypt(key, ciphertext):
 
 # Set the key and plaintext
 key = [0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF]
-plaintext = b'Hello World!'
+plaintext = b"Hello World!"
 
 # Encrypt the plaintext using RC4 algorithm
 ciphertext = rc4(key, plaintext)

@@ -11,11 +11,13 @@ def chinese_remainder_theorem(n, a):
 
     return sum % prod
 
+
 def modular_inverse(a, m):
     g, x, y = extended_euclidean_algorithm(a, m)
     if g != 1:
         raise ValueError("Modular inverse does not exist.")
     return x % m
+
 
 def extended_euclidean_algorithm(a, b):
     if b == 0:
@@ -26,6 +28,7 @@ def extended_euclidean_algorithm(a, b):
     y = x1 - (a // b) * y1
 
     return gcd, x, y
+
 
 # 示例调用
 n = [3, 5, 7]  # 模数列表

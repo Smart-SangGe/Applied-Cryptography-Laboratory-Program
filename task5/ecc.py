@@ -4,10 +4,12 @@ class EllipticCurve:
         self.b = b
         self.mod = mod
 
+
 class Point:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+
 
 def add_points(P, Q, curve):
     if P is None:  # None represents the identity element
@@ -19,13 +21,13 @@ def add_points(P, Q, curve):
     x2, y2 = Q.x, Q.y
 
     if x1 == x2 and y1 == y2:  # P and Q are the same point
-        m = (3 * x1 ** 2 + curve.a) * pow(2 * y1, -1, curve.mod)
+        m = (3 * x1**2 + curve.a) * pow(2 * y1, -1, curve.mod)
     else:
         m = (y2 - y1) * pow(x2 - x1, -1, curve.mod)
 
     m %= curve.mod
 
-    x3 = (m ** 2 - x1 - x2) % curve.mod
+    x3 = (m**2 - x1 - x2) % curve.mod
     y3 = (m * (x1 - x3) - y1) % curve.mod
 
     return Point(x3, y3)
@@ -43,8 +45,8 @@ def multiply_point(n, P, curve):
 
     return result
 
-if __name__ == '__main__':
-    
+
+if __name__ == "__main__":
     # Define a curve
     curve = EllipticCurve(a=2, b=3, mod=97)
 

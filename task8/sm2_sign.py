@@ -1,5 +1,6 @@
 import random
 import hashlib
+from dataclasses import dataclass
 
 # 椭圆曲线参数
 p = int("FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000FFFFFFFFFFFFFFFF", 16)
@@ -10,27 +11,40 @@ Gx = int("32C4AE2C1F1981195F9904466A39C9948FE30BBFF2660BE1719BEE90", 16)
 Gy = int("BC3736A2F4F6779C59BDCEE36B692153D0A9877CC62A474002DF32E1", 16)
 
 
+@dataclass
+class Point:
+    """
+    define point class
+    """
+
+    x: int
+    y: int
+
+
 # 点加法
-def point_addition(P, Q):
+def point_addition(P: Point, Q: Point) -> Point:
+    """
+    implment of sm2 point addition
+    """
+    # gpt4 version
     if P is None:
         return Q
     if Q is None:
         return P
-    if P[0] == Q[0] and P[1] == -Q[1] % p:
-        return None
 
-    if P[0] == Q[0] and P[1] == Q[1]:
-        lam = (3 * P[0] ** 2 + a) * pow(2 * P[1], p - 2, p)
+    if P.x == Q.x and P.y == Q.y:  # Point doubling
+        m = (3 * P.x**2 + a) * pow(2 * P.y, -1, p)
     else:
-        lam = (Q[1] - P[1]) * pow(Q[0] - P[0], p - 2, p)
+        m = (Q.y - P.y) * pow(Q.x - P.x, -1, p)
 
-    x = (lam**2 - P[0] - Q[0]) % p
-    y = (lam * (P[0] - x) - P[1]) % p
-    return (x, y)
+    Rx = (m**2 - P.x - Q.x) % p
+    Ry = (m * (P.x - Rx) - P.y) % p
+
+    return Point(Rx, Ry)
 
 
 # 点倍乘
-def point_multiplication(k, P):
+def point_multiplication(k: int, P: Point) -> Point:
     Q = None
     for i in range(k.bit_length()):
         if (k >> i) & 1:
@@ -40,17 +54,18 @@ def point_multiplication(k, P):
 
 
 # SM2签名
-def sm2_sign(message, private_key):
+def sm2_sign(message: bytes, private_key: int):
     d = private_key
-    e = message
-
-    max_iterations = 100
+    bytes_e = hashlib.sha256(message).digest()
+    e = int.from_bytes(bytes_e)
+    G = Point(Gx, Gy)
+    max_iterations = 1000
     iteration = 0
 
     while iteration < max_iterations:
         k = random.randint(1, n - 1)
-        x1, y1 = point_multiplication(k, (Gx, Gy))
-        r = (e + x1) % n
+        public_key = point_multiplication(k, G)
+        r = (e + public_key.x) % n
         if r == 0 or (r + k) == n:
             iteration += 1
             continue
@@ -97,12 +112,12 @@ def mod_inverse(a, m):
 
 # 示例用法
 private_key = random.randint(1, n - 1)
-public_key = point_multiplication(private_key, (Gx, Gy))
+public_key = point_multiplication(private_key, Point(Gx, Gy))
 print("私钥:", private_key)
 print("公钥:", public_key)
 
 # 待签名的消息
-message = 122233455453423423423
+message = b"22233455453423423423"
 
 # 签名
 # Exception: Failed to generate a valid signature.
